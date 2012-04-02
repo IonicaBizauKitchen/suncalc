@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8' />
+    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
+    <meta name="description" content="SunCalc : SunCalc is a tiny JavaScript library for calculating sun position and sunlight phases for the given location and time." />
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>SunCalc</title>
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/mourner/suncalc">Fork Me on GitHub</a>
+
+          <h1 id="project_title">SunCalc</h1>
+          <h2 id="project_tagline">SunCalc is a tiny JavaScript library for calculating sun position and sunlight phases for the given location and time.</h2>
+
+          <section id="downloads">
+            <a class="zip_download_link" href="https://github.com/mourner/suncalc/zipball/master">Download this project as a .zip file</a>
+            <a class="tar_download_link" href="https://github.com/mourner/suncalc/tarball/master">Download this project as a tar.gz file</a>
+          </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <p>SunCalc is a tiny BSD-licensed JavaScript library for calculating sun position and sunlight phases (times for sunrise, sunset, dusk, etc.) for the given location and time, created by <a href="http://agafonkin.com/en">Vladimir Agafonkin</a> (<a href="https://github.com/mourner">@mourner</a>) as a part of the <a href="http://suncalc.net">SunCalc.net project</a>.</p>
+
+<p>All calculations are based on the formulae given in the excellent <a href="http://aa.quae.nl/en/reken/zonpositie.html">Astronomy Answers article about position of the sun</a>. You can read about different twilight phases calculated by SunCalc in the <a href="http://en.wikipedia.org/wiki/Twilight">Twilight article on Wikipedia</a>.</p>
+
+<h3>Usage example</h3>
+
+<div class="highlight">
+<pre><span class="c1">// get today's sunlight times for London</span>
+<span class="kd">var</span> <span class="nx">times</span> <span class="o">=</span> <span class="nx">SunCalc</span><span class="p">.</span><span class="nx">getTimes</span><span class="p">(</span><span class="k">new</span> <span class="nb">Date</span><span class="p">(),</span> <span class="mf">51.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.1</span><span class="p">);</span>
+
+<span class="c1">// format sunrise time from the Date object</span>
+<span class="kd">var</span> <span class="nx">sunriseStr</span> <span class="o">=</span> <span class="nx">times</span><span class="p">.</span><span class="nx">sunrise</span><span class="p">.</span><span class="nx">getHours</span><span class="p">()</span> <span class="o">+</span> <span class="s1">':'</span> <span class="o">+</span> <span class="nx">times</span><span class="p">.</span><span class="nx">sunrise</span><span class="p">.</span><span class="nx">getMinutes</span><span class="p">();</span>
+
+<span class="c1">// get position of the sun (azimuth and altitude) at today's sunrise</span>
+<span class="kd">var</span> <span class="nx">sunrisePos</span> <span class="o">=</span> <span class="nx">SunCalc</span><span class="p">.</span><span class="nx">getPosition</span><span class="p">(</span><span class="nx">times</span><span class="p">.</span><span class="nx">sunrise</span><span class="p">,</span> <span class="mf">51.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.1</span><span class="p">);</span>
+
+<span class="c1">// get sunrise azimuth in degrees</span>
+<span class="kd">var</span> <span class="nx">sunriseAzimuth</span> <span class="o">=</span> <span class="nx">sunrisePos</span><span class="p">.</span><span class="nx">azimuth</span> <span class="o">*</span> <span class="mi">180</span> <span class="o">/</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">PI</span><span class="p">;</span>
+</pre>
+</div>
+
+
+<h3>Using in a server environment</h3>
+
+<p>In addition to browsers, SunCalc can be used in server environments like Node:</p>
+
+<div class="highlight">
+<pre><span class="kd">var</span> <span class="nx">SunCalc</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'suncalc'</span><span class="p">);</span>
+<span class="c1">// [...] (use SunCalc object as usual)</span>
+</pre>
+</div>
+
+
+<p>It is available as an NPM package, so you can install it with <code>npm install suncalc</code>.</p>
+
+<h3>Reference</h3>
+
+<div class="highlight">
+<pre><span class="nx">SunCalc</span><span class="p">.</span><span class="nx">getTimes</span><span class="p">(</span><span class="cm">/*Date*/</span> <span class="nx">date</span><span class="p">,</span> <span class="cm">/*Number*/</span> <span class="nx">latitude</span><span class="p">,</span> <span class="cm">/*Number*/</span> <span class="nx">longitude</span><span class="p">)</span>
+</pre>
+</div>
+
+
+<p>Returns an object with the following properties (each is a <code>Date</code> object):</p>
+
+<ul>
+<li>
+<code>sunrise</code>: sunrise (top edge of the sun appears on the horizon)</li>
+<li>
+<code>sunriseEnd</code>: sunrise ends (bottom edge of the sun touches the horizon)</li>
+<li>
+<code>goldenHourEnd</code>: morning golden hour (soft light, best time for photography) ends</li>
+<li>
+<code>solarNoon</code>: solar noon (sun is in the highest position)</li>
+<li>
+<code>goldenHour</code>: evening golden hour starts</li>
+<li>
+<code>sunsetStart</code>: sunset starts (bottom edge of the sun touches the horizon)</li>
+<li>
+<code>sunset</code>: sunset (sun disappears below the horizon, evening civil twilight starts)</li>
+<li>
+<code>dusk</code>: dusk (evening nautical twilight starts)</li>
+<li>
+<code>nauticalDusk</code>: nautical dusk (evening astronomical twilight starts)</li>
+<li>
+<code>night</code>: night starts (dark enough for astronomical observations)</li>
+<li>
+<code>nightEnd</code>: night ends (morning astronomical twilight starts)</li>
+<li>
+<code>nauticalDawn</code>: nautical dawn (morning nautical twilight starts)</li>
+<li>
+<code>dawn</code>: dawn (morning nautical twilight ends, morning civil twilight starts)</li>
+</ul><div class="highlight">
+<pre><span class="nx">SunCalc</span><span class="p">.</span><span class="nx">getPosition</span><span class="p">(</span><span class="cm">/*Date*/</span> <span class="nx">timeAndDate</span><span class="p">,</span> <span class="cm">/*Number*/</span> <span class="nx">latitude</span><span class="p">,</span> <span class="cm">/*Number*/</span> <span class="nx">longitude</span><span class="p">)</span>
+</pre>
+</div>
+
+
+<p>Returns an object with the following properties:</p>
+
+<ul>
+<li>
+<code>altitude</code>: sun altitude above the horizon in radians, e.g. <code>0</code> at the horizon and <code>PI/2</code> at the zenith (straight over your head)</li>
+<li>
+<code>azimuth</code>: sun azimuth in radians (direction along the horizon, measured from south to west), e.g. <code>0</code> is south and <code>Math.PI * 3/4</code> is northwest</li>
+</ul><div class="highlight">
+<pre><span class="nx">SunCalc</span><span class="p">.</span><span class="nx">addTime</span><span class="p">(</span><span class="cm">/*Number*/</span> <span class="nx">angleInDegrees</span><span class="p">,</span> <span class="cm">/*String*/</span> <span class="nx">morningName</span><span class="p">,</span> <span class="cm">/*String*/</span> <span class="nx">eveningName</span><span class="p">)</span>
+</pre>
+</div>
+
+
+<p>Adds a custom time when the sun reaches the given angle to results returned by <code>SunCalc.getTimes</code>.</p>
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">SunCalc maintained by <a href="https://github.com/mourner">mourner</a></p>
+        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+    
+
+  </body>
+</html>
