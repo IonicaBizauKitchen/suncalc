@@ -18,7 +18,7 @@
     <div class="wrapper">
       <header>
         <h1>SunCalc</h1>
-        <p>A tiny JavaScript library for calculating sun/moon position and sunlight phases.</p>
+        <p>A tiny JavaScript library for calculating sun/moon positions and phases.</p>
         <p class="view"><a href="https://github.com/mourner/suncalc">View the Project on GitHub <small>mourner/suncalc</small></a></p>
         <ul>
           <li><a href="https://github.com/mourner/suncalc/zipball/master">Download <strong>ZIP File</strong></a></li>
@@ -29,9 +29,17 @@
       <section>
         <h1>SunCalc</h1>
 
-<p>SunCalc is a tiny BSD-licensed JavaScript library for calculating sun position, sunlight phases (times for sunrise, sunset, dusk, etc.) and moon position for the given location and time, created by <a href="http://agafonkin.com/en">Vladimir Agafonkin</a> (<a href="https://github.com/mourner">@mourner</a>) as a part of the <a href="http://suncalc.net">SunCalc.net project</a>.</p>
+<p>SunCalc is a tiny BSD-licensed JavaScript library for calculating sun position,
+sunlight phases (times for sunrise, sunset, dusk, etc.),
+moon position and lunar phase for the given location and time,
+created by <a href="http://agafonkin.com/en">Vladimir Agafonkin</a> (<a href="https://github.com/mourner">@mourner</a>)
+as a part of the <a href="http://suncalc.net">SunCalc.net project</a>.</p>
 
-<p>All calculations are based on the formulas given in the excellent <a href="http://aa.quae.nl/en/reken/zonpositie.html">Astronomy Answers article about position of the sun</a> (and <a href="http://aa.quae.nl/en/reken/hemelpositie.html">this one</a> for the moon position). You can read about different twilight phases calculated by SunCalc in the <a href="http://en.wikipedia.org/wiki/Twilight">Twilight article on Wikipedia</a>.</p>
+<p>Most calculations are based on the formulas given in the excellent Astronomy Answers articles
+about <a href="http://aa.quae.nl/en/reken/zonpositie.html">position of the sun</a>
+and <a href="http://aa.quae.nl/en/reken/hemelpositie.html">the planets</a>.
+You can read about different twilight phases calculated by SunCalc
+in the <a href="http://en.wikipedia.org/wiki/Twilight">Twilight article on Wikipedia</a>.</p>
 
 <h2>Usage example</h2>
 
@@ -50,15 +58,15 @@
 
 <h2>Using in a server environment</h2>
 
-<p>In addition to browsers, SunCalc can be used in server environments like Node:</p>
+<p>In addition to browsers, SunCalc can be used in server environments like Node,
+and is available as an NPM package (<code>npm install suncalc</code>).</p>
 
 <div class="highlight"><pre><span class="kd">var</span> <span class="nx">SunCalc</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'suncalc'</span><span class="p">);</span>
-<span class="c1">// [...] (use SunCalc object as usual)</span>
 </pre></div>
 
-<p>It is available as an NPM package, so you can install it with <code>npm install suncalc</code>.</p>
-
 <h2>Reference</h2>
+
+<h3>Sunlight times</h3>
 
 <div class="highlight"><pre><span class="nx">SunCalc</span><span class="p">.</span><span class="nx">getTimes</span><span class="p">(</span><span class="cm">/*Date*/</span> <span class="nx">date</span><span class="p">,</span> <span class="cm">/*Number*/</span> <span class="nx">latitude</span><span class="p">,</span> <span class="cm">/*Number*/</span> <span class="nx">longitude</span><span class="p">)</span>
 </pre></div>
@@ -94,7 +102,14 @@
 <code>dawn</code>: dawn (morning nautical twilight ends, morning civil twilight starts)</li>
 <li>
 <code>nadir</code>: nadir (darkest moment of the night, sun is in the lowest position)</li>
-</ul><div class="highlight"><pre><span class="nx">SunCalc</span><span class="p">.</span><span class="nx">getPosition</span><span class="p">(</span><span class="cm">/*Date*/</span> <span class="nx">timeAndDate</span><span class="p">,</span> <span class="cm">/*Number*/</span> <span class="nx">latitude</span><span class="p">,</span> <span class="cm">/*Number*/</span> <span class="nx">longitude</span><span class="p">)</span>
+</ul><div class="highlight"><pre><span class="nx">SunCalc</span><span class="p">.</span><span class="nx">addTime</span><span class="p">(</span><span class="cm">/*Number*/</span> <span class="nx">angleInDegrees</span><span class="p">,</span> <span class="cm">/*String*/</span> <span class="nx">morningName</span><span class="p">,</span> <span class="cm">/*String*/</span> <span class="nx">eveningName</span><span class="p">)</span>
+</pre></div>
+
+<p>Adds a custom time when the sun reaches the given angle to results returned by <code>SunCalc.getTimes</code>.</p>
+
+<h3>Sun position</h3>
+
+<div class="highlight"><pre><span class="nx">SunCalc</span><span class="p">.</span><span class="nx">getPosition</span><span class="p">(</span><span class="cm">/*Date*/</span> <span class="nx">timeAndDate</span><span class="p">,</span> <span class="cm">/*Number*/</span> <span class="nx">latitude</span><span class="p">,</span> <span class="cm">/*Number*/</span> <span class="nx">longitude</span><span class="p">)</span>
 </pre></div>
 
 <p>Returns an object with the following properties:</p>
@@ -104,10 +119,7 @@
 <code>altitude</code>: sun altitude above the horizon in radians, e.g. <code>0</code> at the horizon and <code>PI/2</code> at the zenith (straight over your head)</li>
 <li>
 <code>azimuth</code>: sun azimuth in radians (direction along the horizon, measured from south to west), e.g. <code>0</code> is south and <code>Math.PI * 3/4</code> is northwest</li>
-</ul><div class="highlight"><pre><span class="nx">SunCalc</span><span class="p">.</span><span class="nx">addTime</span><span class="p">(</span><span class="cm">/*Number*/</span> <span class="nx">angleInDegrees</span><span class="p">,</span> <span class="cm">/*String*/</span> <span class="nx">morningName</span><span class="p">,</span> <span class="cm">/*String*/</span> <span class="nx">eveningName</span><span class="p">)</span>
-</pre></div>
-
-<p>Adds a custom time when the sun reaches the given angle to results returned by <code>SunCalc.getTimes</code>.</p>
+</ul><h3>Moon position</h3>
 
 <div class="highlight"><pre><span class="nx">SunCalc</span><span class="p">.</span><span class="nx">getMoonPosition</span><span class="p">(</span><span class="cm">/*Date*/</span> <span class="nx">timeAndDate</span><span class="p">,</span> <span class="cm">/*Number*/</span> <span class="nx">latitude</span><span class="p">,</span> <span class="cm">/*Number*/</span> <span class="nx">longitude</span><span class="p">)</span>
 </pre></div>
@@ -116,12 +128,17 @@
 
 <ul>
 <li>
-<code>altitude</code>: moon altitude above the horizon in radians.</li>
+<code>altitude</code>: moon altitude above the horizon in radians</li>
 <li>
-<code>azimuth</code>: moon azimuth in radians.</li>
+<code>azimuth</code>: moon azimuth in radians</li>
 <li>
-<code>distance</code>: distance to moon in kilometers.</li>
-</ul>
+<code>distance</code>: distance to moon in kilometers</li>
+</ul><h3>Moon illumination</h3>
+
+<div class="highlight"><pre><span class="nx">SunCalc</span><span class="p">.</span><span class="nx">getMoonFraction</span><span class="p">(</span><span class="cm">/*Date*/</span> <span class="nx">timeAndDate</span><span class="p">)</span>
+</pre></div>
+
+<p>Returns the illuminated fraction of the moon; varies from <code>0.0</code> (new moon) to <code>1.0</code> (full moon).</p>
       </section>
     </div>
     <footer>
